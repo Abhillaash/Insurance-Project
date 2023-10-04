@@ -1,5 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
+using InsuranceProject.Model;
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ModelContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -8,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
