@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
@@ -26,6 +27,14 @@ namespace InsuranceProject.Model.Holdings
         [Required(ErrorMessage = "Total Payment is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Total Payment must be a positive number")]
         public double TotalPayment { get; set; }
+
+
+
+
+        public InsurancePolicy InsurancePolicy { get; set; }
+       
+        
+        public int? PocilyId { get; set; }
     }
 }
 

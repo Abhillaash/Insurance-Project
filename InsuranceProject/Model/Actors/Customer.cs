@@ -1,5 +1,6 @@
 ﻿using InsuranceProject.Model.Holdings;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.NetworkInformation;
 
 namespace InsuranceProject.Model.Actors
@@ -49,6 +50,8 @@ namespace InsuranceProject.Model.Actors
         public List<Document> Documents { get; set; }
         public List<InsurancePolicy> InsurancePolicies { get; set; }
         public List<Query> Queries { get; set; }
+
+        
 
 
     }

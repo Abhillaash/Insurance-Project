@@ -1,6 +1,7 @@
 ﻿using InsuranceProject.Model.Actors;
 using InsuranceProject.Model.Holdings;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
@@ -16,9 +17,17 @@ namespace InsuranceProject.Model.Holdings
 
 
         public bool Status { get; set; }
-        public List<SchemeDetails> SchemeDetails { get; set; }
+        
+        public InsurancePlan InsurancePlan { get; set; }
+ 
+    
+        public int? PlanId { get; set; }
+        public List<SchemeDetails>? SchemeDetails { get; set; }
 
-        public List<InsurancePolicy> InsurancePolicies { get; set; }
+        public List<InsurancePolicy>? InsurancePolicies { get; set; }
+
+
+
     }
 }
 

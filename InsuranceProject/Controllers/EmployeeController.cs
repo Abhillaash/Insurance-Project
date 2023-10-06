@@ -63,6 +63,19 @@ namespace InsuranceProject.Controllers
 
             return NotFound("Employee not found");
         }
+        [HttpDelete("DeleteEmployee/{id}")]
+        public IActionResult DeleteEmployeeById(int id)
+        {
+            var isRemoved = _employeeService.Delete(id);
+
+            if (isRemoved)
+            {
+                return Ok("Employee Removed Successfully");
+            }
+
+            return NotFound("Employee not found");
+        }
+
         private Employee ConvertToEmployee(EmployeeDTO employeeDTO)
         {
             return new Employee
@@ -82,14 +95,14 @@ namespace InsuranceProject.Controllers
         {
             return new EmployeeDTO
             {
-                EmployeeId = employee.UserId, // Assuming EmployeeId corresponds to UserId in the DTO
-                EmployeeFirstName = employee.FirstName,
-                EmployeeLastName = employee.LastName,
+                EmployeeId = employee.EmployeeId, // Assuming EmployeeId corresponds to UserId in the DTO
+                EmployeeFirstName = employee.EmployeeFirstName,
+                EmployeeLastName = employee.EmployeeLastName,
                 MobileNo = employee.MobileNo, // Map MobileNo property
                 EmailId = employee.EmailId, // Map EmailId property
                 Salary = employee.Salary, // Map Salary property
                 UserId = employee.UserId, // Set UserId if needed
-                Status = employee.IsActive // Map IsActive property to Status
+                Status = employee.Status // Map IsActive property to Status
                                        // Add other property mappings as needed
             };
         }

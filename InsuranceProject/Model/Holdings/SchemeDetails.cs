@@ -1,6 +1,7 @@
 ﻿using InsuranceProject.Model.Actors;
 using InsuranceProject.Model.Holdings;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
@@ -51,6 +52,16 @@ namespace InsuranceProject.Model.Holdings
         [Required(ErrorMessage = "Maximum Investment Time is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Maximum Investment Time must be a positive number")]
         public int MaxInvestTime { get; set; }
+
+        [Required(ErrorMessage = "Staus is required")]
+        public bool Status { get; set; }
+
+
+        public InsuranceScheme InsuranceScheme { get; set; }
+  
+        
+        public int? SchemeId { get; set; }
+
     }
 }
 

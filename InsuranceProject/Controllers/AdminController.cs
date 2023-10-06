@@ -16,7 +16,7 @@ namespace InsuranceProject.Controllers
         {
             _adminService = adminService;
         }
-        
+
 
         //// Manage City/State
         //[HttpGet("manage-city-state")]
@@ -145,6 +145,35 @@ namespace InsuranceProject.Controllers
         //    // Implement logic for generating transaction reports here
         //    return View();
         //}
+        //[HttpGet("GetAllEmployees")]
+        //public IActionResult GetEmployees()
+        //{
+        //    var employees = _adminService.GetAllEmployees();
+        //    return Ok(employees);
+        //}
+        //[HttpGet("GetEmployee/{id}")]
+        //public IActionResult GetEmployee(int EmployeeId,int AdminId)
+        //{
+        //    var employee = _adminService.GetByIdEmployee( EmployeeId,  AdminId);
+        //    if (employee == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var employeeDTO = ConvertToEmployeeDTO(employee);
+        //    return Ok(employeeDTO);
+        //}
+        //[HttpPost("AddEmployee")]
+        //public IActionResult AddEmployee([FromBody] EmployeeDTO employeeDTO)
+        //{
+        //    var newEmployee = ConvertToEmployee(employeeDTO); // Implement ConvertToEmployee method
+        //    var employee = _adminService.AddEmployee(newEmployee); // Assuming you have an EmployeeService
+        //    if (employee != null)
+        //    {
+        //        return CreatedAtAction(nameof(GetEmployees), employee.EmployeeId);
+        //    }
+
+        //    return BadRequest("Employee cannot be created");
+        //}
 
         [HttpGet("GetAllAdmin")]
         public async Task<IActionResult> GetAdmins()
@@ -175,21 +204,21 @@ namespace InsuranceProject.Controllers
             var admin = _adminService.Add(newAdmin);
             if (admin != null)
             {
-                return CreatedAtAction(nameof(GetAdmins), admin.UserId);
+                return CreatedAtAction(nameof(GetAdmins), admin.AdminId);
             }
 
             return BadRequest("User cannot be created");
 
         }
 
-        [HttpPut("UpdateUser")]
+        [HttpPut("UpdateAdmin")]
         public IActionResult UpdateAdmin([FromBody] AdminDTO adminDTO)
         {
             var newAdmin = ConvertToAdmin(adminDTO);
-            newAdmin.UserId = adminDTO.UserId;
+            newAdmin.AdminId = adminDTO.AdminId;
 
             var user = _adminService.Update(newAdmin);
-            return Ok(user.UserId);
+            return Ok(user.AdminId);
 
 
 
@@ -198,19 +227,17 @@ namespace InsuranceProject.Controllers
 
         }
 
-        //[HttpDelete("DeleteUser/{id}")]
-        //public IActionResult DeleteUserById(int id)
+        //[HttpDelete("DeleteAdmin/{id}")]
+        //public IActionResult DeleteAdminById(int id)
         //{
-
         //    var isRemoved = _adminService.Delete(id);
-        //    return Ok("Removed Successfully");
 
+        //    if (isRemoved)
+        //    {
+        //        return Ok("Agent Removed Successfully");
+        //    }
 
-
-
-
-
-
+        //    return NotFound("Agent not found");
         //}
 
 
@@ -280,9 +307,9 @@ namespace InsuranceProject.Controllers
         {
             return new AdminDTO
             {
-                AdminId = admin.UserId, // Assuming AdminId corresponds to UserId in the DTO
-                AdminFirstName = admin.FirstName,
-                AdminLastName = admin.LastName,
+                AdminId = admin.AdminId, // Assuming AdminId corresponds to UserId in the DTO
+                AdminFirstName = admin.AdminFirstName,
+                AdminLastName = admin.AdminLastName,
                 UserId = admin.UserId, // Set UserId if needed
                                       // Map other properties as needed
             };
@@ -298,7 +325,36 @@ namespace InsuranceProject.Controllers
                 // Add other property mappings as needed
             };
         }
-
+        private Employee ConvertToEmployee(EmployeeDTO employeeDTO)
+        {
+            return new Employee
+            {
+                EmployeeId = employeeDTO.EmployeeId,
+                EmployeeFirstName = employeeDTO.EmployeeFirstName,
+                EmployeeLastName = employeeDTO.EmployeeLastName,
+                MobileNo = employeeDTO.MobileNo,
+                EmailId = employeeDTO.EmailId,
+                Salary = employeeDTO.Salary,
+                UserId = employeeDTO.UserId,
+                Status = employeeDTO.Status
+                // Add other property mappings as needed
+            };
+        }
+        private EmployeeDTO ConvertToEmployeeDTO(Employee employee)
+        {
+            return new EmployeeDTO
+            {
+                EmployeeId = employee.EmployeeId, // Assuming EmployeeId corresponds to UserId in the DTO
+                EmployeeFirstName = employee.EmployeeFirstName,
+                EmployeeLastName = employee.EmployeeLastName,
+                MobileNo = employee.MobileNo, // Map MobileNo property
+                EmailId = employee.EmailId, // Map EmailId property
+                Salary = employee.Salary, // Map Salary property
+                UserId = employee.UserId, // Set UserId if needed
+                Status = employee.Status // Map IsActive property to Status
+                                         // Add other property mappings as needed
+            };
+        }
 
         //}
         //private AdminDTO ConvertToUserDTO(User user)

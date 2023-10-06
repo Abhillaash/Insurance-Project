@@ -1,12 +1,17 @@
 ﻿using InsuranceProject.Model.Actors;
 using InsuranceProject.Model.Holdings;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
     public class InsurancePolicy
     {
         [Key]
+        public int PocilyId { get; set; }
+
+        [Required(ErrorMessage = "Policy Number is required")]
+        [Display(Name = "Policy Number")] // Optional: Set the display name
         public int PolicyNo { get; set; }
 
         [Required(ErrorMessage = "Issue Date is required")]
@@ -37,10 +42,21 @@ namespace InsuranceProject.Model.Holdings
         //public PolicyStatus Status { get; set; }
 
         // Navigation property for payments associated with this policy
-        public InsuranceScheme InsuranceScheme { get; set; }
+        public List<InsuranceScheme>? InsuranceSchemes { get; set; }
+
         public List<Claim> Claims { get; set; }
         public List<Payment> Payments { get; set; }
-       
+
+
+        public InsurancePlan InsurancePlan { get; set; }
+        
+        
+        public int? PlanId { get; set; }
+
+        public Customer Customer { get; set; }
+        
+        
+        public int? CustomerId { get; set; }
 
     }
 

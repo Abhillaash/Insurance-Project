@@ -56,6 +56,19 @@ namespace InsuranceProject.Controllers
             var customer = _customerService.Update(newCustomer);
             return Ok(customer.CustomerId);
         }
+        [HttpDelete("DeleteCustomer/{id}")]
+        public IActionResult DeleteCustomerById(int id)
+        {
+            var isRemoved = _customerService.Delete(id);
+
+            if (isRemoved)
+            {
+                return Ok("Customer Removed Successfully");
+            }
+
+            return NotFound("Customer not found");
+        }
+
         private Customer ConvertToCustomer(CustomerDTO customerDTO)
         {
             return new Customer
@@ -77,16 +90,16 @@ namespace InsuranceProject.Controllers
         {
             return new CustomerDTO
             {
-                CustomerId = customer.UserId, // Assuming CustomerId corresponds to UserId in the DTO
-                FirstName = customer.FirstName
+                CustomerId = customer.CustomerId, // Assuming CustomerId corresponds to UserId in the DTO
+                FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                EmailId = customer.Email, // Map Email property to EmailId
+                EmailId = customer.EmailId, // Map Email property to EmailId
                 MobileNo = customer.MobileNo, // Map MobileNo property
                 State = customer.State, // Map State property
                 City = customer.City, // Map City property
                 Nominee = customer.Nominee, // Map Nominee property
                 NomineeRelation = customer.NomineeRelation, // Map NomineeRelation property
-                Status = customer.IsActive // Map IsActive property to Status
+                Status = customer.Status // Map IsActive property to Status
                                        // Add other property mappings as needed
             };
         }

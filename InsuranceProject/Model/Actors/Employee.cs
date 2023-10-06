@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
 namespace InsuranceProject.Model.Actors
@@ -27,14 +28,19 @@ namespace InsuranceProject.Model.Actors
         [Required(ErrorMessage = "Salary is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number")]
         public double Salary { get; set; }
-
-        [Required(ErrorMessage = "User Id is required")]
-        public int UserId { get; set; }
+        public User User { get; set; }
+  
+        
+        public int? UserId { get; set; }
 
         
         public bool Status { get; set; }
         public List<Agent> Agents { get; set; }
-        public List<Document> Documents { get; set; }
+
+        public Admin Admin { get; set; }
+
+        
+        public int? AdminId { get; set; }
         //public List<Claim> Claims { get; set; }
 
 

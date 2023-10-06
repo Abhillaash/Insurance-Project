@@ -66,10 +66,22 @@ namespace InsuranceProject.Controllers
             }
             return NotFound();
         }
+        [HttpDelete("DeleteAgent/{id}")]
+        public IActionResult DeleteAgentById(int id)
+        {
+            var isRemoved = _agentService.Delete(id);
+
+            if (isRemoved)
+            {
+                return Ok("Agent Removed Successfully");
+            }
+
+            return NotFound("Agent not found");
+        }
 
         // Add other agent-related endpoints as needed
 
-        
+
         private Agent ConvertToAgent(AgentDTO agentDTO)
         {
             return new Agent
@@ -90,15 +102,15 @@ namespace InsuranceProject.Controllers
         {
             return new AgentDTO
             {
-                AgentId = agent.UserId, // Assuming AgentId corresponds to UserId in the DTO
-                AgentFirstName = agent.FirstName,
-                AgentLastName = agent.LastName,
+                AgentId = agent.AgentId, // Assuming AgentId corresponds to UserId in the DTO
+                AgentFirstName = agent.AgentFirstName,
+                AgentLastName = agent.AgentLastName,
                 Qualification = agent.Qualification, // Map Qualification property
                 Email = agent.Email, // Map Email property
                 MobileNo = agent.MobileNo, // Map MobileNo property
                 UserId = agent.UserId, // Set UserId if needed
                 CommissionEarned = agent.CommissionEarned, // Map CommissionEarned property
-                Status = agent.IsActive // Map IsActive property to Status
+                Status = agent.Status // Map IsActive property to Status
                                        // Add other property mappings as needed
             };
         }

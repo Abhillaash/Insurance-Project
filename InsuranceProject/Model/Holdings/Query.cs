@@ -1,5 +1,6 @@
 ﻿using InsuranceProject.Model.Actors;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
@@ -20,11 +21,17 @@ namespace InsuranceProject.Model.Holdings
         [DataType(DataType.Date)]
         public DateTime ContactDate { get; set; }
 
+        [Required(ErrorMessage = "Staus is required")]
+        public bool Status { get; set; }
+
         public string Reply { get; set; }
 
         // Assuming a relationship with the Customer class
         public Customer Customer { get; set; }
+       
         
-        
+        public int? CustomerId { get; set; }
+
+
     }
 }

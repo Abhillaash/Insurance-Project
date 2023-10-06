@@ -1,6 +1,7 @@
 ﻿using InsuranceProject.Model.Actors;
 using InsuranceProject.Model.Holdings;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Actors
 {
@@ -28,8 +29,9 @@ namespace InsuranceProject.Model.Actors
         [Required(ErrorMessage = "Mobile Number is required")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid Mobile Number")]
         public string MobileNo { get; set; }
+        public User User { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [Required(ErrorMessage = "Commission Earned is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Commission Earned must be a positive number")]
@@ -40,6 +42,11 @@ namespace InsuranceProject.Model.Actors
         //public CustomerStatus Status { get; set; }
         public bool Status { get; set; }
         public List<Customer> Customers { get; set; }
+
+        public Employee Employee { get; set; }
+
+
+        public int? EmployeeId { get; set; }
     }
 }
 

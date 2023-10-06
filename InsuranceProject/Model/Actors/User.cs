@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Actors
 {
@@ -15,5 +16,12 @@ namespace InsuranceProject.Model.Actors
         [StringLength(100, ErrorMessage = "Password must be between {2} and {1} characters", MinimumLength = 6)]
         public string Password { get; set; }
         public Role Role { get; set; }
+       
+
+        public int? RoleId { get; set; }
+
+
+        [Required(ErrorMessage = "Staus is required")]
+        public bool Status { get; set; }
     }
 }

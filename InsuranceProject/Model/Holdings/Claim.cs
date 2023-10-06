@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceProject.Model.Holdings
 {
@@ -6,10 +7,6 @@ namespace InsuranceProject.Model.Holdings
     {
         [Key]
         public int ClaimId { get; set; }
-
-        [Required(ErrorMessage = "Policy is required")]
-        [StringLength(100, ErrorMessage = "Policy must be between {2} and {1} characters", MinimumLength = 2)]
-        public InsurancePolicy InsurancePolicy { get; set; }
 
         [Required(ErrorMessage = "Claim Amount is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Claim Amount must be a positive number")]
@@ -29,5 +26,8 @@ namespace InsuranceProject.Model.Holdings
 
         [Required(ErrorMessage = "Staus is required")]
         public bool Status { get; set; }
+        public InsurancePolicy InsurancePolicy { get; set; }
+
+        public int? PocilyId { get; set; }
     }
 }
