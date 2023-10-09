@@ -49,8 +49,8 @@ namespace InsuranceProject.Model.Holdings
 
 
         public InsurancePlan InsurancePlan { get; set; }
-        
-        
+
+        [ForeignKey("InsurancePlan")]
         public int? PlanId { get; set; }
 
         public Customer Customer { get; set; }

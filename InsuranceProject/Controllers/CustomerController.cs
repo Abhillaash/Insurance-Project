@@ -18,11 +18,20 @@ namespace InsuranceProject.Controllers
         }
 
         [HttpGet("GetAllCustomers")]
-        public IActionResult GetCustomers()
+        public IActionResult GetAllCustomers()
         {
             var customers = _customerService.GetAll();
-            return Ok(customers);
+
+            var customerDTOs = new List<CustomerDTO>();
+            foreach (var customer in customers)
+            {
+                var customerDTO = ConvertToCustomerDTO(customer);
+                customerDTOs.Add(customerDTO);
+            }
+
+            return Ok(customerDTOs);
         }
+
 
         [HttpGet("GetCustomer/{id}")]
         public IActionResult GetCustomer(int id)
@@ -43,7 +52,7 @@ namespace InsuranceProject.Controllers
             var customer = _customerService.Add(newCustomer);
             if (customer != null)
             {
-                return CreatedAtAction(nameof(GetCustomers), customer.CustomerId);
+                return CreatedAtAction(nameof(GetAllCustomers), customer.CustomerId);
             }
             return BadRequest("Customer cannot be created");
         }

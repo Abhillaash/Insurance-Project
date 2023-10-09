@@ -18,12 +18,28 @@ namespace InsuranceProject.Controllers
             _insurancePlanService = insurancePlanService;
         }
 
-        [HttpGet("GetAllPlans")]
-        public IActionResult GetAllPlans()
+        //[HttpGet("GetAllPlans")]
+        //public IActionResult GetAllPlans()
+        //{
+        //    var plans = _insurancePlanService.GetAllInsurancePlans();
+        //    return Ok(plans);
+        //}
+
+        [HttpGet("GetAllInsurancePlans")]
+        public IActionResult GetAllInsurancePlans()
         {
-            var plans = _insurancePlanService.GetAllInsurancePlans();
-            return Ok(plans);
+            var insurancePlans = _insurancePlanService.GetAllInsurancePlans();
+
+            var insurancePlanDTOs = new List<InsurancePlanDTO>();
+            foreach (var plan in insurancePlans)
+            {
+                var planDTO = ConvertToInsurancePlanDTO(plan);
+                insurancePlanDTOs.Add(planDTO);
+            }
+
+            return Ok(insurancePlanDTOs);
         }
+
 
         [HttpGet("GetPlan/{id}")]
         public IActionResult GetPlan(int id)
@@ -44,7 +60,7 @@ namespace InsuranceProject.Controllers
             var plan = _insurancePlanService.AddInsurancePlan(newPlan);
             if (plan != null)
             {
-                return CreatedAtAction(nameof(GetAllPlans), plan.PlanId);
+                return CreatedAtAction(nameof(GetAllInsurancePlans), plan.PlanId);
             }
             return BadRequest("Insurance plan cannot be created");
         }
@@ -79,6 +95,7 @@ namespace InsuranceProject.Controllers
                 PlanId = plan.PlanId,
                 PlanName = plan.PlanName,
                 Status = plan.Status,
+                AdminId = plan.AdminId,
                 // Add other property mappings as needed
             };
         }
@@ -90,6 +107,7 @@ namespace InsuranceProject.Controllers
                 PlanId = planDTO.PlanId,
                 PlanName = planDTO.PlanName,
                 Status = planDTO.Status,
+                AdminId= planDTO.AdminId,
                 // Add other property mappings as needed
             };
         }

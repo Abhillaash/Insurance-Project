@@ -32,8 +32,8 @@ namespace InsuranceProject.Model.Holdings
 
 
         public InsurancePolicy InsurancePolicy { get; set; }
-       
-        
+
+        [ForeignKey("InsurancePolicy")]
         public int? PocilyId { get; set; }
     }
 }

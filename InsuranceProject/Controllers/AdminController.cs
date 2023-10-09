@@ -175,15 +175,31 @@ namespace InsuranceProject.Controllers
         //    return BadRequest("Employee cannot be created");
         //}
 
-        [HttpGet("GetAllAdmin")]
-        public async Task<IActionResult> GetAdmins()
-        {
-            //string innerTables = "Contacts";
-            //string innerMostTables = "ContactDetails";
-            var admins = _adminService.GetAll();
-            return Ok(admins);
+        //[HttpGet("GetAllAdmin")]
+        //public async Task<IActionResult> GetAdmins()
+        //{
+        //    //string innerTables = "Contacts";
+        //    //string innerMostTables = "ContactDetails";
+        //    var admins = _adminService.GetAll();
+        //    return Ok(admins);
 
+        //}
+
+        [HttpGet("GetAllAdmins")]
+        public IActionResult GetAllAdmins()
+        {
+            var admins = _adminService.GetAll();
+
+            var adminDTOs = new List<AdminDTO>();
+            foreach (var admin in admins)
+            {
+                var adminDTO = ConvertToAdminDTO(admin);
+                adminDTOs.Add(adminDTO);
+            }
+
+            return Ok(adminDTOs);
         }
+
 
         [HttpGet("GetAdmin/{id}")]
         public IActionResult GetAdmin(int id)
@@ -204,7 +220,7 @@ namespace InsuranceProject.Controllers
             var admin = _adminService.Add(newAdmin);
             if (admin != null)
             {
-                return CreatedAtAction(nameof(GetAdmins), admin.AdminId);
+                return CreatedAtAction(nameof(GetAllAdmins), admin.AdminId);
             }
 
             return BadRequest("User cannot be created");

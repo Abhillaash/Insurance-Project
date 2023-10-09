@@ -21,8 +21,17 @@ namespace InsuranceProject.Controllers
         public IActionResult GetAllDocuments()
         {
             var documents = _documentService.GetAllDocuments();
-            return Ok(documents);
+
+            var documentDTOs = new List<DocumentDTO>();
+            foreach (var document in documents)
+            {
+                var documentDTO = ConvertToDocumentDTO(document);
+                documentDTOs.Add(documentDTO);
+            }
+
+            return Ok(documentDTOs);
         }
+
 
         [HttpGet("GetDocument/{id}")]
         public IActionResult GetDocument(int id)

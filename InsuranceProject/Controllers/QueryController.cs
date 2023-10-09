@@ -17,12 +17,28 @@ namespace InsuranceProject.Controllers
             _queryService = queryService;
         }
 
+        //[HttpGet("GetAllQueries")]
+        //public IActionResult GetAllQueries()
+        //{
+        //    var queries = _queryService.GetAllQueries();
+        //    return Ok(queries);
+        //}
+
         [HttpGet("GetAllQueries")]
         public IActionResult GetAllQueries()
         {
             var queries = _queryService.GetAllQueries();
-            return Ok(queries);
+
+            var queryDTOs = new List<QueryDTO>();
+            foreach (var query in queries)
+            {
+                var queryDTO = ConvertToQueryDTO(query);
+                queryDTOs.Add(queryDTO);
+            }
+
+            return Ok(queryDTOs);
         }
+
 
         [HttpGet("GetQuery/{id}")]
         public IActionResult GetQuery(int id)

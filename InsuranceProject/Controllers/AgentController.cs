@@ -94,7 +94,8 @@ namespace InsuranceProject.Controllers
                 MobileNo = agentDTO.MobileNo,
                 UserId = agentDTO.UserId,
                 CommissionEarned = agentDTO.CommissionEarned,
-                Status = agentDTO.Status
+                Status = agentDTO.Status,
+                EmployeeId= agentDTO.EmployeeId,
                 // Add other property mappings as needed
             };
         }
@@ -110,8 +111,9 @@ namespace InsuranceProject.Controllers
                 MobileNo = agent.MobileNo, // Map MobileNo property
                 UserId = agent.UserId, // Set UserId if needed
                 CommissionEarned = agent.CommissionEarned, // Map CommissionEarned property
-                Status = agent.Status // Map IsActive property to Status
-                                       // Add other property mappings as needed
+                Status = agent.Status,
+                EmployeeId= agent.EmployeeId,
+               
             };
         }
 

@@ -31,9 +31,9 @@ namespace InsuranceProject.Service
 
         public InsurancePolicy Update(InsurancePolicy insurancePolicy)
         {
-            if (_repository.Update(insurancePolicy, insurancePolicy.PolicyNo) != null)
+            if (_repository.Update(insurancePolicy, insurancePolicy.PocilyId) != null)
             {
-                return _repository.Update(insurancePolicy, insurancePolicy.PolicyNo);
+                return _repository.Update(insurancePolicy, insurancePolicy.PocilyId);
             }
             throw new Exception("No such insurance policy found");
         }
@@ -44,7 +44,7 @@ namespace InsuranceProject.Service
             if (deleteInsurancePolicy != null)
             {
                 deleteInsurancePolicy.Status = false;
-                _repository.Delete(deleteInsurancePolicy, deleteInsurancePolicy.PolicyNo);
+                _repository.Delete(deleteInsurancePolicy, deleteInsurancePolicy.PocilyId);
                 return true;
             }
             throw new InsurancePolicyNotFoundException("No such insurance policy");

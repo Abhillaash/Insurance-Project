@@ -17,12 +17,28 @@ namespace InsuranceProject.Controllers
             _userService = userService;
         }
 
+        //[HttpGet("GetAllUsers")]
+        //public IActionResult GetUsers()
+        //{
+        //    var users = _userService.GetAll();
+        //    return Ok(users);
+        //}
+
         [HttpGet("GetAllUsers")]
-        public IActionResult GetUsers()
+        public IActionResult GetAllUsers()
         {
             var users = _userService.GetAll();
-            return Ok(users);
+
+            var userDTOs = new List<UserDTO>();
+            foreach (var user in users)
+            {
+                var userDTO = ConvertToUserDTO(user);
+                userDTOs.Add(userDTO);
+            }
+
+            return Ok(userDTOs);
         }
+
 
         [HttpGet("GetUser/{id}")]
         public IActionResult GetUser(int id)
@@ -43,7 +59,7 @@ namespace InsuranceProject.Controllers
             var user = _userService.Add(newUser);
             if (user != null)
             {
-                return CreatedAtAction(nameof(GetUsers), new { id = user.UserId });
+                return CreatedAtAction(nameof(GetAllUsers), new { id = user.UserId });
             }
             return BadRequest("User cannot be created");
         }

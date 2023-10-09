@@ -226,7 +226,6 @@ namespace InsuranceProject.Migrations
                     PremiumAmount = table.Column<double>(type: "float", nullable: false),
                     SumAssured = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    InsurancePlanPlanId = table.Column<int>(type: "int", nullable: false),
                     PlanId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -239,11 +238,10 @@ namespace InsuranceProject.Migrations
                         principalTable: "Customers",
                         principalColumn: "CustomerId");
                     table.ForeignKey(
-                        name: "FK_InsurancePolicies_InsurancePlans_InsurancePlanPlanId",
-                        column: x => x.InsurancePlanPlanId,
+                        name: "FK_InsurancePolicies_InsurancePlans_PlanId",
+                        column: x => x.PlanId,
                         principalTable: "InsurancePlans",
-                        principalColumn: "PlanId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PlanId");
                 });
 
             migrationBuilder.CreateTable(
@@ -254,18 +252,16 @@ namespace InsuranceProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SchemeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    InsurancePlanPlanId = table.Column<int>(type: "int", nullable: false),
                     PlanId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InsuranceSchemes", x => x.SchemeId);
                     table.ForeignKey(
-                        name: "FK_InsuranceSchemes_InsurancePlans_InsurancePlanPlanId",
-                        column: x => x.InsurancePlanPlanId,
+                        name: "FK_InsuranceSchemes_InsurancePlans_PlanId",
+                        column: x => x.PlanId,
                         principalTable: "InsurancePlans",
-                        principalColumn: "PlanId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PlanId");
                 });
 
             migrationBuilder.CreateTable(
@@ -303,18 +299,16 @@ namespace InsuranceProject.Migrations
                     BankIFSCCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    InsurancePolicyPocilyId = table.Column<int>(type: "int", nullable: false),
                     PocilyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Claim", x => x.ClaimId);
                     table.ForeignKey(
-                        name: "FK_Claim_InsurancePolicies_InsurancePolicyPocilyId",
-                        column: x => x.InsurancePolicyPocilyId,
+                        name: "FK_Claim_InsurancePolicies_PocilyId",
+                        column: x => x.PocilyId,
                         principalTable: "InsurancePolicies",
-                        principalColumn: "PocilyId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PocilyId");
                 });
 
             migrationBuilder.CreateTable(
@@ -328,18 +322,16 @@ namespace InsuranceProject.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Tax = table.Column<double>(type: "float", nullable: false),
                     TotalPayment = table.Column<double>(type: "float", nullable: false),
-                    InsurancePolicyPocilyId = table.Column<int>(type: "int", nullable: false),
                     PocilyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payments_InsurancePolicies_InsurancePolicyPocilyId",
-                        column: x => x.InsurancePolicyPocilyId,
+                        name: "FK_Payments_InsurancePolicies_PocilyId",
+                        column: x => x.PocilyId,
                         principalTable: "InsurancePolicies",
-                        principalColumn: "PocilyId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PocilyId");
                 });
 
             migrationBuilder.CreateTable(
@@ -384,18 +376,16 @@ namespace InsuranceProject.Migrations
                     MinInvestTime = table.Column<int>(type: "int", nullable: false),
                     MaxInvestTime = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    InsuranceSchemeSchemeId = table.Column<int>(type: "int", nullable: false),
                     SchemeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SchemeDetails", x => x.DetailId);
                     table.ForeignKey(
-                        name: "FK_SchemeDetails_InsuranceSchemes_InsuranceSchemeSchemeId",
-                        column: x => x.InsuranceSchemeSchemeId,
+                        name: "FK_SchemeDetails_InsuranceSchemes_SchemeId",
+                        column: x => x.SchemeId,
                         principalTable: "InsuranceSchemes",
-                        principalColumn: "SchemeId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SchemeId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -419,9 +409,9 @@ namespace InsuranceProject.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Claim_InsurancePolicyPocilyId",
+                name: "IX_Claim_PocilyId",
                 table: "Claim",
-                column: "InsurancePolicyPocilyId");
+                column: "PocilyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_CustomerId",
@@ -449,9 +439,9 @@ namespace InsuranceProject.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InsurancePolicies_InsurancePlanPlanId",
+                name: "IX_InsurancePolicies_PlanId",
                 table: "InsurancePolicies",
-                column: "InsurancePlanPlanId");
+                column: "PlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InsurancePolicyInsuranceScheme_InsuranceSchemesSchemeId",
@@ -459,14 +449,14 @@ namespace InsuranceProject.Migrations
                 column: "InsuranceSchemesSchemeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InsuranceSchemes_InsurancePlanPlanId",
+                name: "IX_InsuranceSchemes_PlanId",
                 table: "InsuranceSchemes",
-                column: "InsurancePlanPlanId");
+                column: "PlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_InsurancePolicyPocilyId",
+                name: "IX_Payments_PocilyId",
                 table: "Payments",
-                column: "InsurancePolicyPocilyId");
+                column: "PocilyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Queries_CustomerId",
@@ -474,9 +464,9 @@ namespace InsuranceProject.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchemeDetails_InsuranceSchemeSchemeId",
+                name: "IX_SchemeDetails_SchemeId",
                 table: "SchemeDetails",
-                column: "InsuranceSchemeSchemeId");
+                column: "SchemeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",

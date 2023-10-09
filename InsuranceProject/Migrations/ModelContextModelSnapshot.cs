@@ -344,9 +344,6 @@ namespace InsuranceProject.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InsurancePolicyPocilyId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PocilyId")
                         .HasColumnType("int");
 
@@ -355,7 +352,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasKey("ClaimId");
 
-                    b.HasIndex("InsurancePolicyPocilyId");
+                    b.HasIndex("PocilyId");
 
                     b.ToTable("Claim");
                 });
@@ -397,9 +394,6 @@ namespace InsuranceProject.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("InsurancePlanPlanId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
 
@@ -430,7 +424,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("InsurancePlanPlanId");
+                    b.HasIndex("PlanId");
 
                     b.ToTable("InsurancePolicies");
                 });
@@ -442,9 +436,6 @@ namespace InsuranceProject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchemeId"));
-
-                    b.Property<int>("InsurancePlanPlanId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("PlanId")
                         .HasColumnType("int");
@@ -459,7 +450,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasKey("SchemeId");
 
-                    b.HasIndex("InsurancePlanPlanId");
+                    b.HasIndex("PlanId");
 
                     b.ToTable("InsuranceSchemes");
                 });
@@ -478,9 +469,6 @@ namespace InsuranceProject.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InsurancePolicyPocilyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PaymentType")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -497,7 +485,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("InsurancePolicyPocilyId");
+                    b.HasIndex("PocilyId");
 
                     b.ToTable("Payments");
                 });
@@ -556,9 +544,6 @@ namespace InsuranceProject.Migrations
                     b.Property<double>("InstallmentCommRatio")
                         .HasColumnType("float");
 
-                    b.Property<int>("InsuranceSchemeSchemeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MaxAge")
                         .HasColumnType("int");
 
@@ -595,7 +580,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasKey("DetailId");
 
-                    b.HasIndex("InsuranceSchemeSchemeId");
+                    b.HasIndex("SchemeId");
 
                     b.ToTable("SchemeDetails");
                 });
@@ -691,9 +676,7 @@ namespace InsuranceProject.Migrations
                 {
                     b.HasOne("InsuranceProject.Model.Holdings.InsurancePolicy", "InsurancePolicy")
                         .WithMany("Claims")
-                        .HasForeignKey("InsurancePolicyPocilyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PocilyId");
 
                     b.Navigation("InsurancePolicy");
                 });
@@ -715,9 +698,7 @@ namespace InsuranceProject.Migrations
 
                     b.HasOne("InsuranceProject.Model.Holdings.InsurancePlan", "InsurancePlan")
                         .WithMany("InsurancePolicies")
-                        .HasForeignKey("InsurancePlanPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlanId");
 
                     b.Navigation("Customer");
 
@@ -728,9 +709,7 @@ namespace InsuranceProject.Migrations
                 {
                     b.HasOne("InsuranceProject.Model.Holdings.InsurancePlan", "InsurancePlan")
                         .WithMany("InsuranceSchemes")
-                        .HasForeignKey("InsurancePlanPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlanId");
 
                     b.Navigation("InsurancePlan");
                 });
@@ -739,9 +718,7 @@ namespace InsuranceProject.Migrations
                 {
                     b.HasOne("InsuranceProject.Model.Holdings.InsurancePolicy", "InsurancePolicy")
                         .WithMany("Payments")
-                        .HasForeignKey("InsurancePolicyPocilyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PocilyId");
 
                     b.Navigation("InsurancePolicy");
                 });
@@ -759,9 +736,7 @@ namespace InsuranceProject.Migrations
                 {
                     b.HasOne("InsuranceProject.Model.Holdings.InsuranceScheme", "InsuranceScheme")
                         .WithMany("SchemeDetails")
-                        .HasForeignKey("InsuranceSchemeSchemeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SchemeId");
 
                     b.Navigation("InsuranceScheme");
                 });

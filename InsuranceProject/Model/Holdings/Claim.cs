@@ -27,7 +27,7 @@ namespace InsuranceProject.Model.Holdings
         [Required(ErrorMessage = "Staus is required")]
         public bool Status { get; set; }
         public InsurancePolicy InsurancePolicy { get; set; }
-
+        [ForeignKey("InsurancePolicy")]
         public int? PocilyId { get; set; }
     }
 }

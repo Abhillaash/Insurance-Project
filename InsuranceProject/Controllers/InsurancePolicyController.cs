@@ -17,12 +17,28 @@ namespace InsuranceProject.Controllers
             _insurancePolicyService = insurancePolicyService;
         }
 
-        [HttpGet("GetAllPolicies")]
-        public IActionResult GetAllPolicies()
+        //[HttpGet("GetAllPolicies")]
+        //public IActionResult GetAllPolicies()
+        //{
+        //    var policies = _insurancePolicyService.GetAll();
+        //    return Ok(policies);
+        //}
+
+        [HttpGet("GetAllInsurancePolicies")]
+        public IActionResult GetAllInsurancePolicies()
         {
-            var policies = _insurancePolicyService.GetAll();
-            return Ok(policies);
+            var insurancePolicies = _insurancePolicyService.GetAll();
+
+            var insurancePolicyDTOs = new List<InsurancePolicyDTO>();
+            foreach (var policy in insurancePolicies)
+            {
+                var policyDTO = ConvertToInsurancePolicyDTO(policy);
+                insurancePolicyDTOs.Add(policyDTO);
+            }
+
+            return Ok(insurancePolicyDTOs);
         }
+
 
         [HttpGet("GetPolicy/{id}")]
         public IActionResult GetPolicy(int policyNo)
@@ -43,7 +59,7 @@ namespace InsuranceProject.Controllers
             var policy = _insurancePolicyService.Add(newPolicy);
             if (policy != null)
             {
-                return CreatedAtAction(nameof(GetAllPolicies), policy.PolicyNo);
+                return CreatedAtAction(nameof(GetAllInsurancePolicies), policy.PolicyNo);
             }
             return BadRequest("Insurance policy cannot be created");
         }
@@ -82,6 +98,11 @@ namespace InsuranceProject.Controllers
                 PremiumAmount = policyDTO.PremiumAmount,
                 SumAssured = policyDTO.SumAssured,
                 Status = policyDTO.Status,
+                PlanId = policyDTO.PlanId,
+                CustomerId = policyDTO.CustomerId,
+                PocilyId = policyDTO.PocilyId,
+                
+                
                 // Add other property mappings as needed
             };
         }
@@ -96,6 +117,9 @@ namespace InsuranceProject.Controllers
                 PremiumAmount = policy.PremiumAmount,
                 SumAssured = policy.SumAssured,
                 Status = policy.Status,
+                PlanId = policy.PlanId,
+                CustomerId = policy.CustomerId,
+                PocilyId = policy.PocilyId
                 // Add other property mappings as needed
             };
         }

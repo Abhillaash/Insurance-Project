@@ -19,7 +19,8 @@ namespace InsuranceProject.Model.Holdings
         public bool Status { get; set; }
         
         public InsurancePlan InsurancePlan { get; set; }
- 
+
+        [ForeignKey("InsurancePlan")]
     
         public int? PlanId { get; set; }
         public List<SchemeDetails>? SchemeDetails { get; set; }

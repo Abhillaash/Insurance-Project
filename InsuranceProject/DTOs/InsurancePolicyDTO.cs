@@ -38,7 +38,7 @@ namespace InsuranceProject.DTOs
         public bool Status { get; set; }
         public int? PlanId { get; set; }
 
-        public int? SchemeId { get; set; }
+      
         public int? CustomerId { get; set; }
     }
 }

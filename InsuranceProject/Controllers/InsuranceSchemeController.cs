@@ -17,12 +17,27 @@ namespace InsuranceProject.Controllers
             _insuranceSchemeService = insuranceSchemeService;
         }
 
-        [HttpGet("GetAllSchemes")]
-        public IActionResult GetAllSchemes()
+        //[HttpGet("GetAllSchemes")]
+        //public IActionResult GetAllSchemes()
+        //{
+        //    var schemes = _insuranceSchemeService.GetAllInsuranceSchemes();
+        //    return Ok(schemes);
+        //}
+        [HttpGet("GetAllInsuranceSchemes")]
+        public IActionResult GetAllInsuranceSchemes()
         {
-            var schemes = _insuranceSchemeService.GetAllInsuranceSchemes();
-            return Ok(schemes);
+            var insuranceSchemes = _insuranceSchemeService.GetAllInsuranceSchemes();
+
+            var insuranceSchemeDTOs = new List<InsuranceSchemeDTO>();
+            foreach (var scheme in insuranceSchemes)
+            {
+                var schemeDTO = ConvertToInsuranceSchemeDTO(scheme);
+                insuranceSchemeDTOs.Add(schemeDTO);
+            }
+
+            return Ok(insuranceSchemeDTOs);
         }
+
 
         [HttpGet("GetScheme/{id}")]
         public IActionResult GetScheme(int id)
@@ -43,7 +58,7 @@ namespace InsuranceProject.Controllers
             var scheme = _insuranceSchemeService.AddInsuranceScheme(newScheme);
             if (scheme != null)
             {
-                return CreatedAtAction(nameof(GetAllSchemes), scheme.SchemeId);
+                return CreatedAtAction(nameof(GetAllInsuranceSchemes), scheme.SchemeId);
             }
             return BadRequest("Insurance scheme cannot be created");
         }
@@ -78,6 +93,7 @@ namespace InsuranceProject.Controllers
                 SchemeId = scheme.SchemeId,
                 SchemeName = scheme.SchemeName,
                 Status = scheme.Status,
+                PlanId = scheme.PlanId,
                 // Add other property mappings as needed
             };
         }
@@ -90,6 +106,7 @@ namespace InsuranceProject.Controllers
                 SchemeId = schemeDTO.SchemeId,
                 SchemeName = schemeDTO.SchemeName,
                 Status = schemeDTO.Status,
+                PlanId = schemeDTO.PlanId,
                 // Add other property mappings as needed
             };
         }

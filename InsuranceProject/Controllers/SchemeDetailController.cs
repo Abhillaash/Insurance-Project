@@ -18,12 +18,28 @@ namespace InsuranceProject.Controllers
             _schemeDetailsService = schemeDetailsService;
         }
 
+        //[HttpGet("GetAllSchemeDetails")]
+        //public IActionResult GetAllSchemeDetails()
+        //{
+        //    var schemeDetails = _schemeDetailsService.GetAll();
+        //    return Ok(schemeDetails);
+        //}
+
         [HttpGet("GetAllSchemeDetails")]
         public IActionResult GetAllSchemeDetails()
         {
             var schemeDetails = _schemeDetailsService.GetAll();
-            return Ok(schemeDetails);
+
+            var schemeDetailDTOs = new List<SchemeDetailsDTO>();
+            foreach (var schemeDetail in schemeDetails)
+            {
+                var schemeDetailDTO = ConvertToSchemeDetailsDTO(schemeDetail);
+                schemeDetailDTOs.Add(schemeDetailDTO);
+            }
+
+            return Ok(schemeDetailDTOs);
         }
+
 
         [HttpGet("GetSchemeDetails/{id}")]
         public IActionResult GetSchemeDetails(int id)
@@ -89,6 +105,7 @@ namespace InsuranceProject.Controllers
                 MinInvestTime = schemeDetails.MinInvestTime,
                 MaxInvestTime = schemeDetails.MaxInvestTime,
                 Status = schemeDetails.Status,
+                SchemeId=schemeDetails.SchemeId
                 // Add other property mappings as needed
             };
         }
@@ -110,6 +127,7 @@ namespace InsuranceProject.Controllers
                 MinInvestTime = schemeDetailsDTO.MinInvestTime,
                 MaxInvestTime = schemeDetailsDTO.MaxInvestTime,
                 Status = schemeDetailsDTO.Status,
+                SchemeId = schemeDetailsDTO.SchemeId
                 // Add other property mappings as needed
             };
         }

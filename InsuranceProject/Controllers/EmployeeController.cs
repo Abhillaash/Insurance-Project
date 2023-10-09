@@ -17,12 +17,30 @@ namespace InsuranceProject.Controllers
             _employeeService = employeeService;
         }
 
+        //[HttpGet("GetAllEmployees")]
+        //public IActionResult GetEmployees()
+        //{
+        //    var employees = _employeeService.GetAll();
+        //    return Ok(employees);
+        //}
+
+
+
         [HttpGet("GetAllEmployees")]
-        public IActionResult GetEmployees()
+        public IActionResult GetAllEmployees()
         {
             var employees = _employeeService.GetAll();
-            return Ok(employees);
+
+            var employeeDTOs = new List<EmployeeDTO>();
+            foreach (var employee in employees)
+            {
+                var employeeDTO = ConvertToEmployeeDTO(employee);
+                employeeDTOs.Add(employeeDTO);
+            }
+
+            return Ok(employeeDTOs);
         }
+
 
         [HttpGet("GetEmployee/{id}")]
         public IActionResult GetEmployee(int id)
@@ -43,7 +61,7 @@ namespace InsuranceProject.Controllers
             var employee = _employeeService.Add(newEmployee);
             if (employee != null)
             {
-                return CreatedAtAction(nameof(GetEmployees), new { id = employee.EmployeeId });
+                return CreatedAtAction(nameof(GetAllEmployees), new { id = employee.EmployeeId });
             }
 
             return BadRequest("Employee cannot be created");
@@ -87,7 +105,8 @@ namespace InsuranceProject.Controllers
                 EmailId = employeeDTO.EmailId,
                 Salary = employeeDTO.Salary,
                 UserId = employeeDTO.UserId,
-                Status = employeeDTO.Status
+                Status = employeeDTO.Status,
+                AdminId= employeeDTO.AdminId,
                 // Add other property mappings as needed
             };
         }
@@ -102,8 +121,11 @@ namespace InsuranceProject.Controllers
                 EmailId = employee.EmailId, // Map EmailId property
                 Salary = employee.Salary, // Map Salary property
                 UserId = employee.UserId, // Set UserId if needed
-                Status = employee.Status // Map IsActive property to Status
-                                       // Add other property mappings as needed
+                Status = employee.Status,
+                AdminId= employee.AdminId// Map IsActive property to Status
+                
+                               
+                
             };
         }
     }

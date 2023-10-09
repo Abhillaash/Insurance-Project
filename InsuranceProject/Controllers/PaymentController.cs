@@ -17,12 +17,28 @@ namespace InsuranceProject.Controllers
             _paymentService = paymentService;
         }
 
+        //[HttpGet("GetAllPayments")]
+        //public IActionResult GetAllPayments()
+        //{
+        //    var payments = _paymentService.GetAllPayments();
+        //    return Ok(payments);
+        //}
+
         [HttpGet("GetAllPayments")]
         public IActionResult GetAllPayments()
         {
             var payments = _paymentService.GetAllPayments();
-            return Ok(payments);
+
+            var paymentDTOs = new List<PaymentDTO>();
+            foreach (var payment in payments)
+            {
+                var paymentDTO = ConvertToPaymentDTO(payment);
+                paymentDTOs.Add(paymentDTO);
+            }
+
+            return Ok(paymentDTOs);
         }
+
 
         [HttpGet("GetPayment/{id}")]
         public IActionResult GetPayment(int id)
@@ -80,7 +96,8 @@ namespace InsuranceProject.Controllers
                 Amount = payment.Amount,
                 Date = payment.Date,
                 Tax = payment.Tax,
-                TotalPayment = payment.TotalPayment
+                TotalPayment = payment.TotalPayment,
+                PocilyId = payment.PocilyId,
             };
         }
 
@@ -94,6 +111,7 @@ namespace InsuranceProject.Controllers
                 Date = paymentDTO.Date,
                 Tax = paymentDTO.Tax,
                 TotalPayment = paymentDTO.TotalPayment,
+                PocilyId= paymentDTO.PocilyId,
                 // Add other property mappings as needed
             };
         }

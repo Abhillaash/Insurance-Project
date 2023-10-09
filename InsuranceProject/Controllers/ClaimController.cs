@@ -21,7 +21,16 @@ namespace InsuranceProject.Controllers
         public IActionResult GetAllClaims()
         {
             var claims = _claimService.GetAllClaims();
-            return Ok(claims);
+            
+
+            
+            var claimDTOs = new List<ClaimDTO>();
+            foreach (var claim in claims)
+            {
+                var claimDTO = ConvertToClaimDTO(claim); 
+                claimDTOs.Add(claimDTO);
+            }
+            return Ok(claimDTOs);
         }
 
         [HttpGet("GetClaim/{id}")]

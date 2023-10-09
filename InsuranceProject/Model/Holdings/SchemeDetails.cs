@@ -1,5 +1,6 @@
 ﻿using InsuranceProject.Model.Actors;
 using InsuranceProject.Model.Holdings;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -59,7 +60,7 @@ namespace InsuranceProject.Model.Holdings
 
         public InsuranceScheme InsuranceScheme { get; set; }
   
-        
+        [ForeignKey("InsuranceScheme")]
         public int? SchemeId { get; set; }
 
     }

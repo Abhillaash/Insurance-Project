@@ -17,12 +17,28 @@ namespace InsuranceProject.Controllers
             _roleService = roleService;
         }
 
+        //[HttpGet("GetAllRoles")]
+        //public IActionResult GetAllRoles()
+        //{
+        //    var roles = _roleService.GetAllRoles();
+        //    return Ok(roles);
+        //}
+
         [HttpGet("GetAllRoles")]
         public IActionResult GetAllRoles()
         {
             var roles = _roleService.GetAllRoles();
-            return Ok(roles);
+
+            var roleDTOs = new List<RoleDTO>();
+            foreach (var role in roles)
+            {
+                var roleDTO = ConvertToRoleDTO(role);
+                roleDTOs.Add(roleDTO);
+            }
+
+            return Ok(roleDTOs);
         }
+
 
         [HttpGet("GetRole/{id}")]
         public IActionResult GetRole(int id)
